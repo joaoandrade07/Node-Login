@@ -1,4 +1,4 @@
-import { HttpResponse } from "../interfaces/http-response-model";
+import { HttpResponse } from "../interfaces/http-response-interface";
 import { HttpStatus } from "./http-status";
 
 export const response = <T>(status: HttpStatus, body: T): HttpResponse<T> => ({
