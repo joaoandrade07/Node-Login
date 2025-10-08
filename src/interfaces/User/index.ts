@@ -1,6 +1,6 @@
 import { Role } from "../../generated/prisma";
 
-export interface userModel {
+export interface IUserModel {
     name: string;
     email:string;
     password:string;

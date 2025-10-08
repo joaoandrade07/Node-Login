@@ -1,11 +1,11 @@
-import { loginModel } from "../models/Login/loginModel";
+import { ILoginModel } from "../interfaces/Login";
 import prisma from "../prisma"
 import { notFound, ok } from "../utils/http-helpers";;
 import { generateToken } from "../utils/jwt"
 import bcrypt from "bcrypt"
 
 
-export const loginService = async (login: loginModel) => {
+export const loginService = async (login: ILoginModel) => {
     const user = await prisma.user.findUnique( { where :  {email: login.email} } );
     if(!user) return notFound("User or password are wrongs!");
 

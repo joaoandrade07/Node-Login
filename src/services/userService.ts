@@ -1,7 +1,7 @@
 import prisma from "../prisma";
 import bcrypt from "bcrypt"
 import { badRequest, created, internalServerError, noContent, ok } from "../utils/http-helpers";
-import {userModel} from "../models/User/userModel"
+import {IUserModel} from "../interfaces/User"
 import { Role } from "../generated/prisma";
 
 export const getUsersService = async () => {
@@ -14,12 +14,15 @@ export const getUsersService = async () => {
 }
 
 export const getUserByIdService = async(id:string) => {
-    const user = await prisma.user.findUnique({where: {id: id}});
+    const user = await prisma.user.findUnique({
+        where: {id: id},
+        omit:{password:true}
+    });
     if(!user) return noContent();
     return ok(user);
 }
 
-export const createUserService = async(user: userModel) => {
+export const createUserService = async(user: IUserModel) => {
     try {
         const userExists = await prisma.user.findUnique({where:{ email: user.email }});
         if(userExists || userExists != undefined) return badRequest("Erro ao realizar cadastro. Tente novamente.");
